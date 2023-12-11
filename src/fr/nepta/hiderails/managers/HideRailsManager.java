@@ -583,7 +583,7 @@ public class HideRailsManager
 				// If version is not 1.8
 				if (!HideRails.version.isOldVersion()) {
 					// Spawn particle for see where is replacement
-					world.spawnParticle(Particle.BARRIER, loc, 6);
+					
 				}
 			}
 		}

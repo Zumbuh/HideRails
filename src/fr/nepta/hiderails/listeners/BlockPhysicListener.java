@@ -30,7 +30,7 @@ public class BlockPhysicListener extends Listener
 					|| bT == enumCheck("ACTIVATOR_RAIL") || bT == enumCheck("DETECTOR_RAIL") || bT == enumCheck("POWERED_RAIL"))
 				if (e.getBlock().getRelative(BlockFace.DOWN).getType() == enumCheck("ANVIL"))
 					e.setCancelled(true);
-		} else if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_17) {
+		} else if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_20) {
 			if (bT == enumCheck("LEGACY_RAILS") || bT == enumCheck("LEGACY_LADDER")
 					|| bT == enumCheck("LEGACY_ACTIVATOR_RAIL") || bT == enumCheck("LEGACY_DETECTOR_RAIL") || bT == enumCheck("LEGACY_POWERED_RAIL"))
 				if (e.getBlock().getRelative(BlockFace.DOWN).getType() == enumCheck("LEGACY_ANVIL"))

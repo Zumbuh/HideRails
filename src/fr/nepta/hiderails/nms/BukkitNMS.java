@@ -88,7 +88,7 @@ public class BukkitNMS
 		if (VERSION.contains("1_13")) HideRails.version = Version.V1_13;
 		else if (VERSION.contains("1_14")) HideRails.version = Version.V1_14;
 		else if (VERSION.contains("1_15") || VERSION.contains("1_16")) HideRails.version = Version.V1_15;
-		else if (VERSION.contains("1_17")) HideRails.version = Version.V1_17;
+		else if (VERSION.contains("1_20")) HideRails.version = Version.V1_20;
 		else HideRails.version = Version.V1_12;
 
 		if (HideRails.version == Version.V1_12 && VERSION.contains("1_8")) {
@@ -102,11 +102,11 @@ public class BukkitNMS
 			// Replace : ((CraftPlayer) player).getHandle()
 			handle_method = NMSClass.getMethod(NMSClass.getOBCClass("entity.CraftPlayer"), "getHandle");
 
-			if (HideRails.version == Version.V1_17) {
+			if (HideRails.version == Version.V1_20) {
 				player_connection_class = NMSClass.getNMSClass("network.PlayerConnection");
 
 				// Replace : ((CraftPlayer) player).getHandle().c
-				playerConnection_field = NMSClass.getField(NMSClass.getNMSClass("level.EntityPlayer"), "b");
+				playerConnection_field = NMSClass.getField(NMSClass.getNMSClass("level.EntityPlayer"), "c");
 
 				// Replace : ((CraftPlayer) player).getHandle().playerConnection.a
 				networkManager_field = player_connection_class.getDeclaredField("a");
@@ -115,7 +115,7 @@ public class BukkitNMS
 				channel_field = NMSClass.getNMNClass("NetworkManager").getDeclaredField("k");
 
 				// Replace : ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-				sendPacket_method = NMSClass.getMethod(player_connection_class, "sendPacket", NMSClass.getNMNClass("protocol.Packet"));
+				sendPacket_method = NMSClass.getMethod(player_connection_class, "a", NMSClass.getNMNClass("protocol.Packet"));
 
 
 				// ----------------------------------------------------- BLOCKS ------------------------------------------------------ //
@@ -124,7 +124,7 @@ public class BukkitNMS
 
 				block_field = NMSClass.getField(block_change_class, "b");
 
-				constructorBP = block_position_class.getConstructor(double.class, double.class, double.class);
+				constructorBP = block_position_class.getConstructor(int.class, int.class, int.class);
 
 				block_change_constructor = block_change_class.getConstructor(block_position_class, NMSClass.getNMWClass("level.block.state.IBlockData"));
 
@@ -151,7 +151,7 @@ public class BukkitNMS
 				channel_field = NMSClass.getNMSClass("NetworkManager").getDeclaredField("channel");
 
 				// Replace : ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-				sendPacket_method = NMSClass.getMethod(player_connection_class, "sendPacket", NMSClass.getNMSClass("Packet"));
+				sendPacket_method = NMSClass.getMethod(player_connection_class, "a", NMSClass.getNMSClass("Packet"));
 
 
 				// ----------------------------------------------------- BLOCKS ------------------------------------------------------ //
@@ -192,7 +192,7 @@ public class BukkitNMS
 
 				// Replace Block.setData(byte data);
 				setData_method = Block.class.getDeclaredMethod("setData", byte.class);
-			} else if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_17) {
+			} else if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_20) {
 				if (HideRails.version == Version.V1_14) {
 					// Get "IBlockData getBlockData()" method
 					//block_data_method = NMSClass.getMethod(block_class, "getBlockData", null);
@@ -211,17 +211,17 @@ public class BukkitNMS
 			moving_object_position_block_field = NMSClass.getMethod(packet_play_out_in_use_item, "c", (Class<?>[]) null);
 
 			// Replace method : BlockPosition getBlockPosition()
-			block_position_method = movingObjectPositionBlock_class.getDeclaredMethod("getBlockPosition", (Class<?>[]) null);
+			block_position_method = movingObjectPositionBlock_class.getDeclaredMethod("a", (Class<?>[]) null);
 
 			// Replace method : int getX()
-			get_x_base_block_position_method = base_block_position_class.getDeclaredMethod("getX", (Class<?>[]) null);
+			get_x_base_block_position_method = base_block_position_class.getDeclaredMethod("u", (Class<?>[]) null);
 			// Replace method : int getY()
-			get_y_base_block_position_method = base_block_position_class.getDeclaredMethod("getY", (Class<?>[]) null);
+			get_y_base_block_position_method = base_block_position_class.getDeclaredMethod("v", (Class<?>[]) null);
 			// Replace method : int getZ()
-			get_z_base_block_position_method = base_block_position_class.getDeclaredMethod("getZ", (Class<?>[]) null);
+			get_z_base_block_position_method = base_block_position_class.getDeclaredMethod("w", (Class<?>[]) null);
 
 			// Replace method : EnumDirection getDirection()
-			get_direction_method = movingObjectPositionBlock_class.getDeclaredMethod("getDirection", (Class<?>[]) null);
+			get_direction_method = movingObjectPositionBlock_class.getDeclaredMethod("b", (Class<?>[]) null);
 			// ------------------------------------------------------------------------------------------------------------------- //
 
 
@@ -250,8 +250,8 @@ public class BukkitNMS
 
 
 			// -------------------------------------------------- CONFIGURATIONS ------------------------------------------------- //
-			if (HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_17)
-				fileUtils_class = Class.forName("org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils");
+			if (HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_20)
+				fileUtils_class = Class.forName("org.apache.commons.io.FileUtils");
 			else
 				fileUtils_class = Class.forName("org.apache.commons.io.FileUtils");
 
@@ -332,7 +332,7 @@ public class BukkitNMS
 				// Invoke Method "getBlock(Material material)" in CraftMagicNumbers Class : Replace CraftMagicNumbers.getBlock(material)
 				Object craftMagicNumber = NMSClass.invokeMethod(craftMagicNumbers_method_with_data, fromLegacyData_method, material);
 				block_data = NMSClass.invokeMethod(fromLegacyData_method, craftMagicNumber, data);
-			} else if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_17) {
+			} else if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_20) {
 				// Invoke Method "getBlock(Material material)" in CraftMagicNumbers Class : Replace CraftMagicNumbers.getBlock(material)
 				//Object craftMagicNumber = NMSClass.invokeMethod(craftMagicNumbers_method, null, material);
 
@@ -349,7 +349,7 @@ public class BukkitNMS
 			Object blockPosition = NMSClass.newInstance(constructorBP, x, y, z);
 
 			// Instantiation of PacketPlayOutBlockChange packet
-			if (HideRails.version != Version.V1_17) {
+			if (HideRails.version != Version.V1_20) {
 				packet = NMSClass.newInstance(block_change_class);
 
 				block_change_pos_field.set(packet, blockPosition);
@@ -368,7 +368,7 @@ public class BukkitNMS
 		catch (InvocationTargetException e)
 		{
 			/* If material is LEGACY or invalid */
-			if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_17) {
+			if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_20) {
 				System.err.println("[HideRails] <ERROR> THE 'HiddenRails.yml' FILE THAT CONTAINS INVALID BLOCKS, YOU MUST UPDATE THE BLOCK'" + baseMatName + "' OR DELETE THE FILE!!");
 			} else if (HideRails.version == Version.V1_14) {
 				/* Try without data */
@@ -434,7 +434,7 @@ public class BukkitNMS
 			sendPacket(player, packet);
 		} else if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_14) {
 			player.spawnParticle(Particle.valueOf(((Enum<ParticleName_v1_13>) particleName).name().toUpperCase()), loc.getX(), loc.getY(), loc.getZ(), 0, 0d, 0d, 0d, amount);
-		} else if (HideRails.version == Version.V1_15 || HideRails.version == Version.V1_17) {
+		} else if (HideRails.version == Version.V1_15 || HideRails.version == Version.V1_20) {
 			player.spawnParticle(Particle.valueOf(((Enum<ParticleName_v1_15>) particleName).name().toUpperCase()), loc.getX(), loc.getY(), loc.getZ(), 0, 0d, 0d, 0d, amount);
 		}
 	}

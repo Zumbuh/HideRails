@@ -29,7 +29,7 @@ public class NMSClass
 	public static Class<?> getNMNClass(String className)
 	{
 		try {
-			if (HideRails.version == Version.V1_17) {
+			if (HideRails.version == Version.V1_20) {
 				return Class.forName("net.minecraft.network." + className);				
 			} else {
 				throw new IncorrectMappingVersionException();//"Method incompatible with the current version"
@@ -50,7 +50,7 @@ public class NMSClass
 	public static Class<?> getNMWClass(String className)
 	{
 		try {
-			if (HideRails.version == Version.V1_17) {
+			if (HideRails.version == Version.V1_20) {
 				return Class.forName("net.minecraft.world." + className);				
 			} else {
 				throw new IncorrectMappingVersionException();//"Method incompatible with the current version"
@@ -71,7 +71,7 @@ public class NMSClass
 	public static Class<?> getNMCClass(String className)
 	{
 		try {
-			if (HideRails.version == Version.V1_17) {
+			if (HideRails.version == Version.V1_20) {
 				return Class.forName("net.minecraft.core." + className);				
 			} else {
 				throw new IncorrectMappingVersionException();//"Method incompatible with the current version"
@@ -91,10 +91,10 @@ public class NMSClass
 	public static Class<?> getNMSClass(String className)
 	{
 		try {
-			if (HideRails.version == Version.V1_17) {
+			if (HideRails.version == Version.V1_20) {
 				return Class.forName("net.minecraft.server." + className);				
 			} else {
-				return Class.forName("net.minecraft.server." + VERSION + "." + className);				
+				return Class.forName("net.minecraft.server." + className);				
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

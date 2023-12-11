@@ -56,7 +56,7 @@ public class BlockClickListener extends Listener
 					if (HideRails.version == Version.V1_12) {
 						if (itType == JavaChecker.enumCheck("WOOD_AXE"))
 							b = true;
-					} else if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_17) {
+					} else if (HideRails.version == Version.V1_13 || HideRails.version == Version.V1_14 || HideRails.version == Version.V1_15 || HideRails.version == Version.V1_20) {
 						if (itType == JavaChecker.enumCheck("LEGACY_WOOD_AXE") || itType == JavaChecker.enumCheck("WOODEN_AXE"))
 							b = true;
 					}
